@@ -27,12 +27,14 @@ public class ArcRaycaster : MonoBehaviour {
 	public OVRInput.Controller Controller {
 		get {
 			OVRInput.Controller controller = OVRInput.GetConnectedControllers ();
-            if ((controller & OVRInput.Controller.RTouch) == OVRInput.Controller.RTouch) {
-                return OVRInput.Controller.RTouch;
-            }
-            else if ((controller & OVRInput.Controller.LTouch) == OVRInput.Controller.LTouch) {
+
+			// swapped for project
+            if ((controller & OVRInput.Controller.LTouch) == OVRInput.Controller.LTouch) {
                 return OVRInput.Controller.LTouch;
             }
+			else if ((controller & OVRInput.Controller.RTouch) == OVRInput.Controller.RTouch) {
+				return OVRInput.Controller.RTouch;
+			}
 
             if ((controller & OVRInput.Controller.LTrackedRemote) == OVRInput.Controller.LTrackedRemote) {
 				return OVRInput.Controller.LTrackedRemote;

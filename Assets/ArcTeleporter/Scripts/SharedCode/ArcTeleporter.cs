@@ -54,10 +54,12 @@ public class ArcTeleporter : MonoBehaviour {
 		// change line below to change button mapping
         //bool currentTriggerState = OVRInput.Get (OVRInput.Button.PrimaryIndexTrigger, controller);
 		bool currentTriggerState = OVRInput.Get (OVRInput.Button.One, controller);
+		//bool currentTriggerState = (OVRInput.Get (OVRInput.Axis1D.PrimaryHandTrigger, controller) > 0.1f);
+
 		if (currentTriggerState) {
 			arcRenderer.enabled = true;
 			arcLocation.gameObject.SetActive (true);
-			Debug.Log ("arc renderer should display");
+			//Debug.Log ("arc renderer should display");
 
 		} else {
 			arcRenderer.enabled = false;
@@ -94,13 +96,15 @@ public class ArcTeleporter : MonoBehaviour {
 		get {
 			OVRInput.Controller controllers = OVRInput.GetConnectedControllers ();
 
-            if ((controllers & OVRInput.Controller.RTouch) == OVRInput.Controller.RTouch) {
-                return OVRInput.Controller.RTouch;
-            }
+			// swapped for project
 
             if ((controllers & OVRInput.Controller.LTouch) == OVRInput.Controller.LTouch) {
                 return OVRInput.Controller.LTouch;
             }
+
+			if ((controllers & OVRInput.Controller.RTouch) == OVRInput.Controller.RTouch) {
+				return OVRInput.Controller.RTouch;
+			}
 
             if ((controllers & OVRInput.Controller.LTrackedRemote) == OVRInput.Controller.LTrackedRemote) {
 				return OVRInput.Controller.LTrackedRemote;

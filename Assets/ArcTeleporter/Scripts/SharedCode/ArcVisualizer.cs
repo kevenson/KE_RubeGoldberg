@@ -70,12 +70,13 @@ public class ArcVisualizer : MonoBehaviour {
         get {
             OVRInput.Controller controllers = OVRInput.GetConnectedControllers();
 
+			// swapped for project
+
+			if ((controllers & OVRInput.Controller.LTouch) == OVRInput.Controller.LTouch) {
+				return OVRInput.Controller.LTouch;
+			}
             if ((controllers & OVRInput.Controller.RTouch) == OVRInput.Controller.RTouch) {
                 return OVRInput.Controller.RTouch;
-            }
-
-            if ((controllers & OVRInput.Controller.LTouch) == OVRInput.Controller.LTouch) {
-                return OVRInput.Controller.LTouch;
             }
 
             if ((controllers & OVRInput.Controller.LTrackedRemote) == OVRInput.Controller.LTrackedRemote) {

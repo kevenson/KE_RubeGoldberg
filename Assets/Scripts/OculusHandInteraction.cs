@@ -25,10 +25,10 @@ public class OculusHandInteraction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//trackedObj = GetComponent<SteamVR_TrackedObject> ();
-		if (leftHand) {
-			thisController = OVRInput.Controller.LTouch;
-		} else {
+		if (!leftHand) {
 			thisController = OVRInput.Controller.RTouch;
+		} else {
+			thisController = OVRInput.Controller.LTouch;
 		}
 		
 	}
@@ -37,8 +37,8 @@ public class OculusHandInteraction : MonoBehaviour {
 	void Update () {
 		//device = SteamVR_Controller.Input ((int)trackedObj.index);
 
-		if (leftHand) {
-			menuStickX = OVRInput.Get (OVRInput.Axis2D.PrimaryThumbstick, thisController).x;
+		if (!leftHand) {
+			menuStickX = OVRInput.Get (OVRInput.Axis2D.SecondaryThumbstick, thisController).x;
 			if (menuStickX < 0.45f && menuStickX > -0.45f) {
 				menuIsSwipable = true;
 			}
@@ -55,7 +55,7 @@ public class OculusHandInteraction : MonoBehaviour {
 			}
 		}
 
-		if (OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger, thisController)) {
+		if (OVRInput.GetDown (OVRInput.Button.SecondaryIndexTrigger, thisController)) {
 			objectMenuManager.SpawnCurrentObject ();
 		}
 	}
@@ -76,11 +76,11 @@ public class OculusHandInteraction : MonoBehaviour {
 
 	void OnTriggerStay(Collider col){
 		if (col.gameObject.CompareTag ("Throwable")) {	// if we don't tag throwable objects, this would capture other objects, like floors
-			if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, thisController) < 0.1f) {
+			if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger, thisController) < 0.1f) {
 				// call THrowObject function if we are touching a throwable object and have released the trigger
 				ThrowObject(col);
 			}
-			else if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, thisController) > 0.1f){
+			else if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger, thisController) > 0.1f){
 				// call GrabObject function if we are touching throwable object and have pressed the trigger
 				GrabObject(col);
 			}
