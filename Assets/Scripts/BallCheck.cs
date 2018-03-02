@@ -11,16 +11,11 @@ public class BallCheck : MonoBehaviour {
 		startPos = transform.position;
 		Debug.Log (startPos);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
-	void OnCollisionEnter (Collider coli) {
+	void OnCollisionEnter (Collision coli) {
 		Debug.Log ("ball collided with...something");
-		//if (coli.gameObject.tag == "Ground") {
-		if (coli.gameObject.CompareTag ("Ground")) {
+		if (coli.gameObject.tag == "Ground") {
+		//if (coli.gameObject.CompareTag ("Ground")) {
 			Debug.Log ("ball collided with ground..reset");
 			transform.position = startPos;
 		}
