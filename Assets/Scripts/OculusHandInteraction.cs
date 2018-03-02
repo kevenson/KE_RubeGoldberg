@@ -9,6 +9,7 @@ public class OculusHandInteraction : MonoBehaviour {
 	public float throwForce = 1.5f;		// between 1.5 - 2 seems to work well for most apps
 	// need to make so that will work w/ each hand
 	private OVRInput.Controller thisController;
+	//private OVRInput.Controller thisController;
 	public bool leftHand; // if true t his is left hand controller
 
 	[Header("Swipe vars")]	// these should eventually be private vars
@@ -25,10 +26,10 @@ public class OculusHandInteraction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		//trackedObj = GetComponent<SteamVR_TrackedObject> ();
-		if (!leftHand) {
-			thisController = OVRInput.Controller.RTouch;
-		} else {
+		if (leftHand) {
 			thisController = OVRInput.Controller.LTouch;
+		} else {
+			thisController = OVRInput.Controller.RTouch;
 		}
 		
 	}
@@ -36,6 +37,8 @@ public class OculusHandInteraction : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//device = SteamVR_Controller.Input ((int)trackedObj.index);
+		//Debug.Log(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, thisController));
+		//Debug.Log(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, thisController));
 
 		if (!leftHand) {
 			menuStickX = OVRInput.Get (OVRInput.Axis2D.SecondaryThumbstick, thisController).x;
@@ -75,12 +78,15 @@ public class OculusHandInteraction : MonoBehaviour {
 	}
 
 	void OnTriggerStay(Collider col){
+
+		// this is always zero
+		//Debug.Log(OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, thisController));
 		if (col.gameObject.CompareTag ("Throwable")) {	// if we don't tag throwable objects, this would capture other objects, like floors
-			if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger, thisController) < 0.1f) {
+			if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, thisController) < 0.1f) {
 				// call THrowObject function if we are touching a throwable object and have released the trigger
 				ThrowObject(col);
 			}
-			else if (OVRInput.Get(OVRInput.Axis1D.SecondaryHandTrigger, thisController) > 0.1f){
+			else if (OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, thisController) > 0.1f){
 				// call GrabObject function if we are touching throwable object and have pressed the trigger
 				GrabObject(col);
 			}
