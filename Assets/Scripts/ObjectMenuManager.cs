@@ -6,6 +6,7 @@ public class ObjectMenuManager : MonoBehaviour {
 	public List<GameObject> objectList; //handled automatically at start
 	public List<GameObject> objectPrefabList; // set manually in inspector and MUST match order of scene's menu objects
 	public int currentObject = 0;
+	//private GameObject newObject;
 	//public SteamVR_LoadLevel loadLevel;
 	// Use this for initialization
 	void Start () {
@@ -15,9 +16,21 @@ public class ObjectMenuManager : MonoBehaviour {
 	}
 
 	public void SpawnCurrentObject() {
-		Instantiate (objectPrefabList [currentObject],
+		// instantiate selected object, turn physics on, and scale up by 10x
+		GameObject newObject = Instantiate (objectPrefabList [currentObject], 
 			objectList [currentObject].transform.position,
 			objectList [currentObject].transform.rotation);
+		newObject.GetComponent<Rigidbody> ().isKinematic = false;
+		Vector3 scaleUp = newObject.transform.localScale;
+		scaleUp.x *= 10f;
+		scaleUp.y *= 10f;
+		scaleUp.z *= 10f;
+		newObject.transform.localScale = scaleUp;
+
+//		Instantiate (objectPrefabList [currentObject],
+//			objectList [currentObject].transform.position,
+//			objectList [currentObject].transform.rotation);
+		
 		//loadLevel.Trigger ();
 	}
 	public void MenuLeft() {

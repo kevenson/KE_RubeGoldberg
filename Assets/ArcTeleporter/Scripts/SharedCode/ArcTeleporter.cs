@@ -53,7 +53,8 @@ public class ArcTeleporter : MonoBehaviour {
         OVRInput.Controller controller = Controller;
 		// change line below to change button mapping
         //bool currentTriggerState = OVRInput.Get (OVRInput.Button.PrimaryIndexTrigger, controller);
-		bool currentTriggerState = OVRInput.Get (OVRInput.Button.One, controller);
+		bool currentTriggerState = OVRInput.Get (OVRInput.Button.PrimaryHandTrigger, controller);
+		//bool currentTriggerState = OVRInput.Get (OVRInput.Button.One, controller);
 		//bool currentTriggerState = (OVRInput.Get (OVRInput.Axis1D.PrimaryHandTrigger, controller) > 0.1f);
 
 		if (currentTriggerState) {
