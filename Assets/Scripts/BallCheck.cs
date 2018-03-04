@@ -8,9 +8,17 @@ public class BallCheck : MonoBehaviour {
 	private Quaternion originalRotation;
 	[Header("Scoring vars")]
 	public List<GameObject> collectibleList;
+	public List<GameObject> boxList;
 	public int score = 0;
 	public GameObject player;
 	public GameObject platform;
+	public SteamVR_LoadLevel loadLevel;
+	public platformCheck platCheck;
+	private bool onPlatform;
+	private Renderer rend; 
+	private Color startColor = Color.white;
+	private Color offPlatform = Color.red;
+
 	//public int num_collect;
 
 	//GameObject 
@@ -18,25 +26,40 @@ public class BallCheck : MonoBehaviour {
 	void Start () {
 		startPos = transform.position;
 		originalRotation = transform.rotation;
+		rend = GetComponent<Renderer> ();
 		//Rigidbody rigidBody = gameObject.GetComponent<Rigidbody> ();
-		Debug.Log (startPos);
+		//Debug.Log (startPos);
 	}
 
 	void Update () {
 		
 	}
 	void OnTriggerStay (Collider col) {
+		if (col.gameObject.tag == "Platform") {
+			onPlatform = true;
+			//Debug.Log ("onPlatform= "+ onPlatform);
+		}
+	}
 
+	void OnTriggerExit (Collider col) {
+		if (col.gameObject.tag == "Platform" && platCheck.playerOnPlatform() == false) {
+			onPlatform = false;
+			//Debug.Log (platCheck.playerOnPlatform);
+			//Debug.Log ("onPlatform= "+ onPlatform);
+			//Renderer rend = GetComponent<Renderer> ();
+			rend.material.color = offPlatform;
+		}
 	}
 
 	void OnCollisionEnter (Collision coli) {
-		Debug.Log ("ball collided with...something");
+		//Debug.Log ("ball collided with...something");
 
 		if (coli.gameObject.tag == "Collectible") {
 			Debug.Log ("ball hit collectible..reset");
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 			//rigidBody.Sleep();
+
 			transform.position = startPos;
 			transform.rotation = originalRotation;
 			//Destroy (coli.gameObject);
@@ -53,6 +76,7 @@ public class BallCheck : MonoBehaviour {
 			//rigidBody.Sleep();
 			transform.position = startPos;
 			transform.rotation = originalRotation;
+			rend.material.color = startColor;
 			score = 0;
 			// re-instantiate collectibles
 			for (int i=0; i < collectibleList.Count; i++) {
@@ -62,13 +86,20 @@ public class BallCheck : MonoBehaviour {
 //					collectibleList [i].transform.position,
 //					collectibleList [i].transform.rotation);
 			}
+			// make sure our boxes are reactivated too
+			for (int i = 0; i < boxList.Count; i++) {
+				Debug.Log ("re-instantiating..." + boxList.Count + " objects");
+				boxList [i].gameObject.SetActive (true);
+			}
 		}
 
 		if (coli.gameObject.tag == "Goal") {
 			Debug.Log ("ball hit goal");
-			if (score == collectibleList.Count +1) {
+			if (score == collectibleList.Count) {
 				Debug.Log ("you win...load new level");
 				Destroy (gameObject);
+				loadLevel.Trigger();
+
 			} else {
 				GetComponent<Rigidbody> ().velocity = Vector3.zero;
 				GetComponent<Rigidbody> ().angularVelocity = Vector3.zero;

@@ -129,7 +129,7 @@ public class OculusHandInteraction : MonoBehaviour {
 		coli.GetComponent<Rigidbody> ().isKinematic = true;
 		//device.TriggerHapticPulse (2000);
 		//debug line
-		Debug.Log("you are touching object: GrabObject");
+		//Debug.Log("you are touching object: GrabObject");
 	}
 
 	void ThrowObject(Collider coli) {
@@ -145,12 +145,12 @@ public class OculusHandInteraction : MonoBehaviour {
 			rigidBody.velocity = OVRInput.GetLocalControllerVelocity (thisController) * throwForce;
 			//rigidBody.angularVelocity = device.angularVelocity;
 			rigidBody.angularVelocity = OVRInput.GetLocalControllerAngularVelocity (thisController); //.eulerAngles;
-			Debug.Log ("you have released the trigger on a throwable object");
+			//Debug.Log ("you have released the trigger on a throwable object");
 		} else {
 			// structure objects
 			rigidBody.isKinematic = false;
 			//rigidBody.velocity = device.velocity * throwForce;
-			Debug.Log ("you have released the trigger on a structure object");
+			//Debug.Log ("you have released the trigger on a structure object");
 		}
 	}
 }
