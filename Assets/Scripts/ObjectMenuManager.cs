@@ -26,6 +26,7 @@ public class ObjectMenuManager : MonoBehaviour {
 		scaleUp.y *= 10f;
 		scaleUp.z *= 10f;
 		newObject.transform.localScale = scaleUp;
+		newObject.GetComponent<Collider> ().enabled = true;
 
 //		Instantiate (objectPrefabList [currentObject],
 //			objectList [currentObject].transform.position,

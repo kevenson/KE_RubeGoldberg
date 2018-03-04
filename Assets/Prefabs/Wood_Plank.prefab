@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65209360699640666}
   m_Layer: 8
   m_Name: Wood_Plank
-  m_TagString: Untagged
+  m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 1247257971958006}
   m_LocalRotation: {x: 0.000000081460335, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalScale: {x: 15, y: 15, z: 75}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -107,7 +107,7 @@ BoxCollider:
   m_GameObject: {fileID: 1247257971958006}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.01999998, y: 0.0003999999, z: 0.0030376017}
   m_Center: {x: -0.0000000041909516, y: -7.421477e-10, z: 0.0000000018044375}

@@ -52,6 +52,9 @@ public class OculusHandInteraction : MonoBehaviour {
 			if(OVRInput.Get (OVRInput.Touch.SecondaryThumbstick)) {
 			// turn on child ObjectMenuManager
 				transform.Find("ObjectMenu").gameObject.SetActive(true);
+				if (OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger, thisController)) {
+					objectMenuManager.SpawnCurrentObject ();
+				}
 			} 
 			else {
 				transform.Find("ObjectMenu").gameObject.SetActive(false);
@@ -76,9 +79,9 @@ public class OculusHandInteraction : MonoBehaviour {
 			}
 		}
 
-		if (OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger, thisController)) {
-			objectMenuManager.SpawnCurrentObject ();
-		}
+//		if (OVRInput.GetDown (OVRInput.Button.PrimaryIndexTrigger, thisController)) {
+//			objectMenuManager.SpawnCurrentObject ();
+//		}
 	}
 
 	void SpawnObject() {
@@ -100,13 +103,21 @@ public class OculusHandInteraction : MonoBehaviour {
 		// this is always zero
 		//Debug.Log(OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, thisController));
 		if (col.gameObject.CompareTag ("Throwable")) {	// if we don't tag throwable objects, this would capture other objects, like floors
-			if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, thisController) < 0.1f) {
+			if (OVRInput.Get (OVRInput.Axis1D.PrimaryIndexTrigger, thisController) < 0.1f) {
 				// call THrowObject function if we are touching a throwable object and have released the trigger
-				ThrowObject(col);
-			}
-			else if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, thisController) > 0.1f){
+				ThrowObject (col);
+			} else if (OVRInput.Get (OVRInput.Axis1D.PrimaryIndexTrigger, thisController) > 0.1f) {
 				// call GrabObject function if we are touching throwable object and have pressed the trigger
-				GrabObject(col);
+				GrabObject (col);
+			}
+		} 
+		else if (col.gameObject.CompareTag ("Structure")) {
+			if (OVRInput.Get (OVRInput.Axis1D.PrimaryIndexTrigger, thisController) < 0.1f) {
+				// call THrowObject function if we are touching a structure object and have released the trigger
+				ThrowObject (col);
+			} else if (OVRInput.Get (OVRInput.Axis1D.PrimaryIndexTrigger, thisController) > 0.1f) {
+				// call GrabObject function if we are touching structure object and have pressed the trigger
+				GrabObject (col);
 			}
 		}
 	}
@@ -126,11 +137,20 @@ public class OculusHandInteraction : MonoBehaviour {
 		// and set velocity based on controller velocity * throwForce variable
 		coli.transform.SetParent(null); 
 		Rigidbody rigidBody = coli.GetComponent<Rigidbody> ();
-		rigidBody.isKinematic = false;
-		//rigidBody.velocity = device.velocity * throwForce;
-		rigidBody.velocity = OVRInput.GetLocalControllerVelocity(thisController) * throwForce;
-		//rigidBody.angularVelocity = device.angularVelocity;
-		rigidBody.angularVelocity = OVRInput.GetLocalControllerAngularVelocity(thisController); //.eulerAngles;
-		Debug.Log("you have released the trigger on object: ThrowObject");
+
+		// handle differently depening on object tag
+		if (coli.gameObject.CompareTag ("Throwable")) {
+			rigidBody.isKinematic = false;
+			//rigidBody.velocity = device.velocity * throwForce;
+			rigidBody.velocity = OVRInput.GetLocalControllerVelocity (thisController) * throwForce;
+			//rigidBody.angularVelocity = device.angularVelocity;
+			rigidBody.angularVelocity = OVRInput.GetLocalControllerAngularVelocity (thisController); //.eulerAngles;
+			Debug.Log ("you have released the trigger on a throwable object");
+		} else {
+			// structure objects
+			rigidBody.isKinematic = false;
+			//rigidBody.velocity = device.velocity * throwForce;
+			Debug.Log ("you have released the trigger on a structure object");
+		}
 	}
 }

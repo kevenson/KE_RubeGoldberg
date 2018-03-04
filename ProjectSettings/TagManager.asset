@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Throwable
   - Ground
+  - Structure
+  - Collectible
+  - Goal
   layers:
   - Default
   - TransparentFX
