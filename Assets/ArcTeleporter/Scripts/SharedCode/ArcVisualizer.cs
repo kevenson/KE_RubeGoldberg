@@ -16,9 +16,10 @@ public class ArcVisualizer : MonoBehaviour {
 	public int segments = 20;
 
 	protected bool EarlyOut() {
-		if (arcRenderer != null) {
-			arcRenderer.enabled = HasController;
-		}
+		// this was enabling arcRenderer to start for builds (but not in editor)
+//		if (arcRenderer != null) {
+//			arcRenderer.enabled = HasController;
+//		}
 
 		if (arcRaycaster == null || !HasController) {
 			if (contactIndicator != null) {

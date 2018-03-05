@@ -23,11 +23,13 @@ public class platformCheck : MonoBehaviour {
 	void OnTriggerStay (Collider col) {
 		if (col.gameObject.tag == "Platform") {
 			playerOnP = true;
+			Debug.Log ("player's onplatform: " + playerOnP);
 		} 
 	}
 	void OnTriggerExit (Collider col) {
 		if (col.gameObject.tag == "Platform") {
 			playerOnP = false;
+			Debug.Log ("player's onplatform: " + playerOnP);
 		} 
 	}
 

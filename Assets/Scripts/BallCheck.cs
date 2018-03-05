@@ -12,6 +12,7 @@ public class BallCheck : MonoBehaviour {
 	public int score = 0;
 	public GameObject player;
 	public GameObject platform;
+	public GameObject goal;
 	public SteamVR_LoadLevel loadLevel;
 	public platformCheck platCheck;
 	private bool onPlatform;
@@ -32,7 +33,18 @@ public class BallCheck : MonoBehaviour {
 	}
 
 	void Update () {
-		
+		if (platCheck.playerOnPlatform() == false && onPlatform == false) {
+			//Debug.Log (platCheck.playerOnPlatform());
+			Debug.Log ("onPlatform= "+ onPlatform);
+			//Renderer rend = GetComponent<Renderer> ();
+			rend.material.color = offPlatform;
+			score = 0;
+			for (int i = 0; i < collectibleList.Count; i++) {
+				Debug.Log ("re-instantiating..." + collectibleList.Count + " objects");
+				collectibleList [i].gameObject.SetActive (false);
+			}
+			goal.SetActive (false);
+		}
 	}
 	void OnTriggerStay (Collider col) {
 		if (col.gameObject.tag == "Platform") {
@@ -42,15 +54,47 @@ public class BallCheck : MonoBehaviour {
 	}
 
 	void OnTriggerExit (Collider col) {
-		if (col.gameObject.tag == "Platform" && platCheck.playerOnPlatform() == false) {
+		// anti-cheat code: force restart if ball leaves platform
+		if (col.gameObject.tag == "Platform") {
 			onPlatform = false;
-			//Debug.Log (platCheck.playerOnPlatform);
-			//Debug.Log ("onPlatform= "+ onPlatform);
+			//Debug.Log (platCheck.playerOnPlatform());
+			Debug.Log ("onPlatform= "+ onPlatform);
 			//Renderer rend = GetComponent<Renderer> ();
-			rend.material.color = offPlatform;
+			//rend.material.color = offPlatform;
+//			score = 0;
+//			for (int i = 0; i < collectibleList.Count; i++) {
+//				Debug.Log ("re-instantiating..." + collectibleList.Count + " objects");
+//				collectibleList [i].gameObject.SetActive (false);
+//			}
+//			goal.SetActive (false);
+
+
 		}
 	}
-
+	void resetLevel() {
+		GetComponent<Rigidbody>().velocity = Vector3.zero;
+		GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+		//rigidBody.Sleep();
+		transform.position = startPos;
+		transform.rotation = originalRotation;
+		rend.material.color = startColor;
+		score = 0;
+		rend.material.color = startColor;
+		goal.SetActive (true);
+		// re-instantiate collectibles
+		for (int i=0; i < collectibleList.Count; i++) {
+			Debug.Log ("re-instantiating..." + collectibleList.Count + " objects");
+			collectibleList [i].gameObject.SetActive (true);
+			//				Instantiate (collectibleList [i],
+			//					collectibleList [i].transform.position,
+			//					collectibleList [i].transform.rotation);
+		}
+		// make sure our boxes are reactivated too
+		for (int i = 0; i < boxList.Count; i++) {
+			Debug.Log ("re-instantiating..." + boxList.Count + " objects");
+			boxList [i].gameObject.SetActive (true);
+		}
+	}
 	void OnCollisionEnter (Collision coli) {
 		//Debug.Log ("ball collided with...something");
 
@@ -71,26 +115,27 @@ public class BallCheck : MonoBehaviour {
 		if (coli.gameObject.tag == "Ground") {
 		//if (coli.gameObject.CompareTag ("Ground")) {
 			Debug.Log ("ball collided with ground..reset");
-			GetComponent<Rigidbody>().velocity = Vector3.zero;
-			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-			//rigidBody.Sleep();
-			transform.position = startPos;
-			transform.rotation = originalRotation;
-			rend.material.color = startColor;
-			score = 0;
-			// re-instantiate collectibles
-			for (int i=0; i < collectibleList.Count; i++) {
-				Debug.Log ("re-instantiating..." + collectibleList.Count + " objects");
-				collectibleList [i].gameObject.SetActive (true);
-//				Instantiate (collectibleList [i],
-//					collectibleList [i].transform.position,
-//					collectibleList [i].transform.rotation);
-			}
-			// make sure our boxes are reactivated too
-			for (int i = 0; i < boxList.Count; i++) {
-				Debug.Log ("re-instantiating..." + boxList.Count + " objects");
-				boxList [i].gameObject.SetActive (true);
-			}
+			resetLevel ();
+//			GetComponent<Rigidbody>().velocity = Vector3.zero;
+//			GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+//			//rigidBody.Sleep();
+//			transform.position = startPos;
+//			transform.rotation = originalRotation;
+//			rend.material.color = startColor;
+//			score = 0;
+//			// re-instantiate collectibles
+//			for (int i=0; i < collectibleList.Count; i++) {
+//				Debug.Log ("re-instantiating..." + collectibleList.Count + " objects");
+//				collectibleList [i].gameObject.SetActive (true);
+////				Instantiate (collectibleList [i],
+////					collectibleList [i].transform.position,
+////					collectibleList [i].transform.rotation);
+//			}
+//			// make sure our boxes are reactivated too
+//			for (int i = 0; i < boxList.Count; i++) {
+//				Debug.Log ("re-instantiating..." + boxList.Count + " objects");
+//				boxList [i].gameObject.SetActive (true);
+//			}
 		}
 
 		if (coli.gameObject.tag == "Goal") {
@@ -99,6 +144,8 @@ public class BallCheck : MonoBehaviour {
 				Debug.Log ("you win...load new level");
 				Destroy (gameObject);
 				loadLevel.Trigger();
+				//loadLevel.Begin("Scene1");
+				//SteamVR_LoadLevel.Begin("Scene1");
 
 			} else {
 				GetComponent<Rigidbody> ().velocity = Vector3.zero;

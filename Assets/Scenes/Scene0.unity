@@ -1817,7 +1817,7 @@ SphereCollider:
   m_GameObject: {fileID: 391768864}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.56
   m_Center: {x: 0, y: 0, z: 0}
@@ -1869,11 +1869,11 @@ MonoBehaviour:
   bottom: {fileID: 0}
   backgroundColor: {r: 0, g: 0, b: 0, a: 1}
   showGrid: 0
-  fadeOutTime: 0.5
-  fadeInTime: 0.5
+  fadeOutTime: 2
+  fadeInTime: 2
   postLoadSettleTime: 0
-  loadingScreenFadeInTime: 1
-  loadingScreenFadeOutTime: 0.25
+  loadingScreenFadeInTime: 2
+  loadingScreenFadeOutTime: 2
   autoTriggerOnEnable: 0
 --- !u!4 &414506081
 Transform:
@@ -2350,7 +2350,7 @@ Prefab:
       objectReference: {fileID: 391768864}
     - target: {fileID: 1250001395817506, guid: c91481f34b0c048ef9d5ef2a23edc502, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114349850602347358, guid: c91481f34b0c048ef9d5ef2a23edc502,
         type: 2}
@@ -6684,7 +6684,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 548592861
+  randomSeed: 1786366742
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10930,15 +10930,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4466457616249842, guid: a53d6ad3aa6cb2b4389e08875e642c66, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.0005
+      value: 0.00142
       objectReference: {fileID: 0}
     - target: {fileID: 4466457616249842, guid: a53d6ad3aa6cb2b4389e08875e642c66, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.159
+      value: 0.1815
       objectReference: {fileID: 0}
     - target: {fileID: 4466457616249842, guid: a53d6ad3aa6cb2b4389e08875e642c66, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.0172
+      value: 0.01452
       objectReference: {fileID: 0}
     - target: {fileID: 4466457616249842, guid: a53d6ad3aa6cb2b4389e08875e642c66, type: 2}
       propertyPath: m_LocalRotation.x
@@ -11577,7 +11577,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1724283319}
   m_LocalRotation: {x: -0.0000000035532453, y: 0.9990483, z: -0.0000000813828, w: -0.043618023}
-  m_LocalPosition: {x: 8.63, y: -1.13, z: -2.14}
+  m_LocalPosition: {x: 10.98, y: -1.13, z: -12.32}
   m_LocalScale: {x: 100.000084, y: 100, z: 100.000084}
   m_Children: []
   m_Father: {fileID: 1979908470}
@@ -12251,7 +12251,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1816651616}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -5.06, y: 0.000024795532, z: -1.88}
+  m_LocalPosition: {x: -2.255, y: 0.000024795532, z: -1.88}
   m_LocalScale: {x: 100, y: 99.99994, z: 99.99994}
   m_Children: []
   m_Father: {fileID: 57822692}

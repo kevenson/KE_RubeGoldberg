@@ -36,6 +36,10 @@ public class ArcTeleporter : MonoBehaviour {
 		if (objectToMove == null) {
 			Debug.LogError ("ArcTeleporter's target object is not set");
 		}
+		// for build ?
+
+		//arcRenderer.enabled = false;
+		//arcLocation.gameObject.SetActive (false);
 	}
 
 	void Update () {
