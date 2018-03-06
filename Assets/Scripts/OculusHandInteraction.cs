@@ -22,6 +22,7 @@ public class OculusHandInteraction : MonoBehaviour {
 	public ObjectMenuManager objectMenuManager; // makes it easy to link 2 scripts
 	private bool menuIsSwipable;
 	private float menuStickX;
+	public GameObject helperText;
 
 	// Use this for initialization
 	void Start () {
@@ -36,17 +37,18 @@ public class OculusHandInteraction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//device = SteamVR_Controller.Input ((int)trackedObj.index);
-		//Debug.Log(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger, thisController));
-		//Debug.Log(OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, thisController));
+		// for help text
+		if (leftHand) {
+			if (OVRInput.Get (OVRInput.Button.Three)) {
+				helperText.SetActive (true);
+			} else {
+				helperText.SetActive (false);
+			}
+		}
 
-
-
+		// object menu
 		if (!leftHand) {
 			menuStickX = OVRInput.Get (OVRInput.Axis2D.PrimaryThumbstick, thisController).x;
-			//Debug.Log (OVRInput.Get (OVRInput.Button.SecondaryThumbstick, thisController));
-			//Debug.Log (menuStickX);
-			//Debug.Log (OVRInput.Get (OVRInput.Touch.PrimaryThumbstick));
 
 			//detect if user it touching thumbstick
 			if(OVRInput.Get (OVRInput.Touch.SecondaryThumbstick)) {
